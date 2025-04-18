@@ -12,11 +12,11 @@
         padding: 20px;
     }
     .profile-img {
-        width: 200px;
-        height: 200px;
+        width: 125px;
+        height: 125px;
         border-radius: 50%;
         object-fit: cover;
-        margin: 20px auto;
+        margin: 5px auto;
         border: 3px solid white;
     }
     .head {
@@ -80,7 +80,8 @@
     
     /* The actual iframe */
     .embedded-iframe {
-        width: 80%;
+        margin-top: 20px;
+        width: 100%;
         height: 200px;
         border: none;
     }
@@ -116,6 +117,18 @@
     .whatsapp-button:hover {
         background: #128C7E;
     }
+    .github-button {
+        background: #2A2A2A;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        display: inline-block;
+    }
+    
     #github-card {
     margin: 0 auto;
     border-radius: 8px;
@@ -156,7 +169,7 @@
 </head>
 <body>
     <img src="images/icon.webp" class="profile-img" alt="Profile Photo">
-    <h1>Al Fadhil</h1>
+    <h3>Al Fadhil</h3>
     <p>also known as noothu, pixel artist, graphic designer, and game developer.</p>
 
     <p class="head">Centralized Contacts</p>
@@ -171,15 +184,18 @@
     </div>
 
     <!-- Add this to your HTML where you want the GitHub section -->
-<div id="box">
-    <div class="button-embed-container" id="github-container">
-        <div class="embedded-content">
-            <button class="close-embed" onclick="toggleEmbed('github')">&times;</button>
-            <div id="github-card" data-user="NTHGiT" data-height="200px" data-width="100%"></div>
+    <div id="box">
+        <div class="button-embed-container" id="github-container">
+            <div class="embedded-content">
+                <button class="close-embed" onclick="toggleEmbed('github')">&times;</button>
+                <div class="github-content">
+                    <div id="github-card" data-user="NTHGiT" data-height="200px" data-width="100%"></div>
+                    <center><button class="github-button" onclick="window.open('https://github.com/NTHGiT', '_blank')">View More on GitHub</button>
+                </div>
+            </div>
+            <button class="link-box" onclick="toggleEmbed('github')">GitHub Profile</button>
         </div>
-        <button class="link-box" onclick="toggleEmbed('github')">GitHub Profile</button>
     </div>
-</div>
     
     <p class="head">Decentralized Socials</p>
     <div id="box">
@@ -217,52 +233,60 @@
         </div>
     </div>
 
-    <script>
-        let currentOpenContainer = null;
+<script>
+    let currentOpenContainer = null;
 
-        function toggleEmbed(containerId, embedUrl) {
-            const container = document.getElementById(`${containerId}-container`);
-            
-            // If clicking the same container that's already open, close it
-            if (currentOpenContainer === container) {
-                container.classList.remove('active');
-                if (containerId !== 'intishar') {
-                    document.getElementById(`${containerId}-iframe`).src = '';
-                }
-                currentOpenContainer = null;
-                return;
+    function toggleEmbed(containerId, embedUrl) {
+        const container = document.getElementById(`${containerId}-container`);
+        
+        // If clicking the same container that's already open, close it
+        if (currentOpenContainer === container) {
+            container.classList.remove('active');
+            // Only reset src for iframe containers (not GitHub)
+            if (containerId !== 'github' && container.querySelector('iframe')) {
+                container.querySelector('iframe').src = '';
             }
-            
-            // Close any currently open container
-            if (currentOpenContainer) {
-                const currentId = currentOpenContainer.id.replace('-container', '');
-                currentOpenContainer.classList.remove('active');
-                if (currentId !== 'intishar') {
-                    document.getElementById(`${currentId}-iframe`).src = '';
-                }
-            }
-            
-            // Open the clicked container
-            container.classList.add('active');
-            if (embedUrl && containerId !== 'intishar') {
-                document.getElementById(`${containerId}-iframe`).src = embedUrl;
-            }
-            currentOpenContainer = container;
+            currentOpenContainer = null;
+            return;
         }
-
-        // Close when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!currentOpenContainer) return;
-            
-            const isClickInside = currentOpenContainer.contains(event.target);
-            const isCloseButton = event.target.classList.contains('close-embed');
-            
-            if (!isClickInside || isCloseButton) {
-                const containerId = currentOpenContainer.id.replace('-container', '');
-                toggleEmbed(containerId);
+        
+        // Close any currently open container
+        if (currentOpenContainer) {
+            const currentId = currentOpenContainer.id.replace('-container', '');
+            currentOpenContainer.classList.remove('active');
+            // Only reset src for iframe containers (not GitHub)
+            if (currentId !== 'github' && currentOpenContainer.querySelector('iframe')) {
+                currentOpenContainer.querySelector('iframe').src = '';
             }
-        });
-    </script>
-    <script type="module" src="https://cdn.jsdelivr.net/gh/PhanhotboY/profile-card@latest/jsdelivr/widget.js"></script>
+        }
+        
+        // Open the clicked container
+        container.classList.add('active');
+        // Only set src for iframe containers (not GitHub)
+        if (embedUrl && containerId !== 'github' && container.querySelector('iframe')) {
+            container.querySelector('iframe').src = embedUrl;
+        }
+        currentOpenContainer = container;
+    }
+
+    // Close when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!currentOpenContainer) return;
+        
+        const isClickInside = currentOpenContainer.contains(event.target);
+        const isCloseButton = event.target.classList.contains('close-embed');
+        
+        if (!isClickInside || isCloseButton) {
+            const containerId = currentOpenContainer.id.replace('-container', '');
+            toggleEmbed(containerId);
+        }
+    });
+
+    // Load GitHub card widget
+    const githubScript = document.createElement('script');
+    githubScript.type = 'module';
+    githubScript.src = 'https://cdn.jsdelivr.net/gh/PhanhotboY/profile-card@latest/jsdelivr/widget.js';
+    document.body.appendChild(githubScript);
+</script>
 </body>
 </html>
