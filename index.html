@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>noothu centre</title>
+    <title>Al Fadhil Baiti's</title>
     <style>
         body {
             color: white;
@@ -18,19 +18,25 @@
             margin: 20px auto;
             border: 3px solid white;
         }
+        .head {
+            font-weight: bold;
+        }
+        #box{
+            display: grid;
+        }
         .link-box {
             background: white;
+            width:80%;
             padding: 15px;
-            margin: 10px auto;
+            margin: 5px auto;
             border-radius: 10px;
-            max-width: 500px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             text-decoration: none;
             color: #333;
             font-weight: bold;
         }
         .link-box:hover {
-            transform: scale(1.02);
+            transform: scale(1.1);
         }
     </style>
 </head>
@@ -39,15 +45,21 @@
     <h1>Al Fadhil</h1>
     <p>also known as noothu, pixel artist, graphic designer, and game developer.</p>
 
-    <p>Centrelized Contacts</p>
-    <a class="link-box" href="https://instagram.com/ilfadhill">Instagram</a>
+    <p class="head">Centrelized Contacts</p>
+    <div id="box">
+        <button class="link-box" onclick="window.location.href='https://instagram.com/ilfadhill'">Instagram</button>
+    </div>
+    
+    <p class="head">Decentrelized Socials</p>
+    <div id="box">
+        <button class="link-box" onclick="window.location.href='https://pixelfed.social/noothu'">Pixelfed</button>
+        <button class="link-box" onclick="window.location.href='https://mastodon.art/noothu'">Mastodon</button>
+    </div>
 
-    <p>Decentrelized Socials</p>
-    <a class="link-box" href="https://pixelfed.social/noothu">Pixelfed</a>
-    <a class="link-box" href="https://mastodon.art/noothu">Mastodon</a>
-
-    <p>Media's</p>
-    <a class="link-box" href="https://whatsapp.com/channel/0029VbA16817tkj2cLutas2L">Intishar AA</a>
+    <p class="head">Media's</p
+    <div id="box">
+    <button class="link-box" onclick="window.location.href='https://whatsapp.com/channel/0029VbA16817tkj2cLutas2L'">Intishar AA</button>
+    </div>
     
 </body>
 </html>
