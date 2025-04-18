@@ -117,7 +117,7 @@
     .whatsapp-button:hover {
         background: #128C7E;
     }
-    .github-button {
+    .github-button .mastodon-button {
         background: #2A2A2A;
         color: white;
         border: none;
@@ -130,10 +130,10 @@
     }
     
     #github-card {
-    margin: 0 auto;
-    border-radius: 8px;
-    overflow: hidden;
-}
+       margin: 0 auto;
+       border-radius: 8px;
+       overflow: hidden;
+    }
 
 
     /* Tablet styles (600px and up) */
@@ -207,7 +207,7 @@
             <button class="link-box" onclick="toggleEmbed('pixelfed', 'https://pixelfed.social/noothu/embed')">Pixelfed</button>
         </div>
         
-            <button class="link-box" onclick="windows.location.href='https://mastodon.art/noothu'">Mastodon</button>
+        <button class="mastodon-button" onclick="window.open('https://mastodon.art/noothu', '_blank')">Mastodon</button>
     </div>
 
     <p class="head">Media's</p>
