@@ -3,79 +3,67 @@
 <head>
     <title>Al Fadhil Baiti's</title>
     <style>
-    @media only screen and (min-width: 400px) {
-        body {
-            color: white;
-            font-family: Arial, sans-serif;
-            background: #202A44;
-            text-align: center;
-            padding: 20px;
-        }
+     {
+        color: white;
+        font-family: Arial, sans-serif;
+        background: #202A44;
+        text-align: center;
+        padding: 20px;
+    }
+    .profile-img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 20px auto;
+        border: 3px solid white;
+    }
+    .head {
+        font-weight: bold;
+    }
+    #box {
+        display: grid;
+    }
+    .link-box {
+        background: white;
+        width: 80vw;
+        padding: 15px;
+        margin: 5px auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        text-decoration: none;
+        color: #333;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        transition: transform 0.3s ease;
+    }
+    .link-box:hover {
+        transform: scale(1.05);
+    }
+
+    /* Tablet styles (600px and up) */
+    @media screen and (min-width: 600px) {
         .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 20px auto;
-            border: 3px solid white;
-        }
-        .head {
-            font-weight: bold;
-        }
-        #box{
-            display: grid;
+            width: 150px;
+            height: 150px;
         }
         .link-box {
-            text-size: 10pt;
-            background: white;
-            width: 80vw;
-            padding: 15px;
-            margin: 5px auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-        .link-box:hover {
-            transform: scale(1.1);
+            width: 60%;
+            max-width: 400px;
         }
     }
-    @media only screen and (min-width: 700px) {
-        body {
-            color: white;
-            font-family: Arial, sans-serif;
-            background: #202A44;
-            text-align: center;
-            padding: 20px;
-        }
+
+    /* Desktop styles (900px and up) */
+    @media screen and (min-width: 900px) {
         .profile-img {
             width: 100px;
             height: 100px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin: 20px auto;
-            border: 3px solid white;
-        }
-        .head {
-            font-weight: bold;
-        }
-        #box{
-            display: grid;
         }
         .link-box {
-            background: white;
-            width:60%;
-            padding: 15px;
-            margin: 5px auto;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            text-decoration: none;
-            color: #333;
-            font-weight: bold;
-        }
-        .link-box:hover {
-            transform: scale(1.1);
+            width: 50%;
+            max-width: 500px;
         }
     }
     </style>
