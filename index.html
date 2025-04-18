@@ -21,15 +21,23 @@
     }
     .head {
         font-weight: bold;
+        margin-top: 20px;
     }
     #box {
         display: grid;
     }
+    
+    /* Container for button + embed */
+    .button-embed-container {
+        width: 80vw;
+        margin: 5px auto;
+        position: relative;
+    }
+    
     .link-box {
         background: white;
-        width: 80vw;
+        width: 100%;
         padding: 15px;
-        margin: 5px auto;
         border-radius: 10px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         text-decoration: none;
@@ -38,10 +46,75 @@
         border: none;
         cursor: pointer;
         font-size: 14px;
-        transition: transform 0.3s ease;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
     }
     .link-box:hover {
-        transform: scale(1.05);
+        transform: scale(1.02);
+    }
+    
+    /* Embedded content - hidden by default */
+    .embedded-content {
+        width: 100% - 10px;
+        border-radius: 10px 10px 0 0;
+        background: white;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height 0.3s ease, padding 0.3s ease;
+        position: relative;
+        color: #333;
+        text-align: left;
+    }
+    
+    /* When active */
+    .button-embed-container.active .embedded-content {
+        max-height: 500px;
+        padding: 10px;
+        box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
+    }
+    .button-embed-container.active .link-box {
+        border-radius: 0 0 10px 10px;
+        transform: translateY(0);
+    }
+    
+    /* The actual iframe */
+    .embedded-iframe {
+        width: 80%;
+        height: 200px;
+        border: none;
+    }
+    
+    /* Close button */
+    .close-embed {
+        position: absolute;
+        top: 5px;
+        right: 10px;
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #333;
+        z-index: 2;
+    }
+
+    /* WhatsApp specific styles */
+    .whatsapp-content {
+        padding: 10px;
+    }
+    .whatsapp-button {
+        background: #25D366;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        margin-top: 10px;
+        cursor: pointer;
+        font-weight: bold;
+        display: inline-block;
+    }
+    .whatsapp-button:hover {
+        background: #128C7E;
     }
 
     /* Tablet styles (600px and up) */
@@ -50,7 +123,7 @@
             width: 150px;
             height: 150px;
         }
-        .link-box {
+        .button-embed-container {
             width: 60%;
             max-width: 400px;
         }
@@ -62,7 +135,7 @@
             width: 100px;
             height: 100px;
         }
-        .link-box {
+        .button-embed-container {
             width: 50%;
             max-width: 500px;
         }
@@ -76,19 +149,96 @@
 
     <p class="head">Centralized Contacts</p>
     <div id="box">
-        <button class="link-box" onclick="window.location.href='https://instagram.com/ilfadhill'">Instagram</button>
+        <div class="button-embed-container" id="instagram-container">
+            <div class="embedded-content">
+                <button class="close-embed" onclick="toggleEmbed('instagram')">&times;</button>
+                <iframe class="embedded-iframe" id="instagram-iframe"></iframe>
+            </div>
+            <button class="link-box" onclick="toggleEmbed('instagram', 'https://instagram.com/ilfadhill/embed')">Instagram</button>
+        </div>
     </div>
     
     <p class="head">Decentralized Socials</p>
     <div id="box">
-        <button class="link-box" onclick="window.location.href='https://pixelfed.social/noothu'">Pixelfed</button>
-        <button class="link-box" onclick="window.location.href='https://mastodon.art/noothu'">Mastodon</button>
+        <div class="button-embed-container" id="pixelfed-container">
+            <div class="embedded-content">
+                <button class="close-embed" onclick="toggleEmbed('pixelfed')">&times;</button>
+                <iframe class="embedded-iframe" id="pixelfed-iframe"></iframe>
+            </div>
+            <button class="link-box" onclick="toggleEmbed('pixelfed', 'https://pixelfed.social/noothu/embed')">Pixelfed</button>
+        </div>
+        
+        <div class="button-embed-container" id="mastodon-container">
+            <div class="embedded-content">
+                <button class="close-embed" onclick="toggleEmbed('mastodon')">&times;</button>
+                <iframe class="embedded-iframe" id="mastodon-iframe"></iframe>
+            </div>
+            <button class="link-box" onclick="toggleEmbed('mastodon', 'https://mastodon.art/noothu/embed')">Mastodon</button>
+        </div>
     </div>
 
-    <p class="head">Media's</p
+    <p class="head">Media's</p>
     <div id="box">
-    <button class="link-box" onclick="window.location.href='https://whatsapp.com/channel/0029VbA16817tkj2cLutas2L'">Intishar AA</button>
+        <div class="button-embed-container" id="intishar-container">
+            <div class="embedded-content">
+                <button class="close-embed" onclick="toggleEmbed('intishar')">&times;</button>
+                <div class="whatsapp-content">
+                    <center>
+                        <h3>Intishar AA WhatsApp Channel</h3>
+                        <p>Stay updated with our latest content on WhatsApp. Click below to join our channel:</p>
+                        <button class="whatsapp-button" onclick="window.open('https://whatsapp.com/channel/0029VbA16817tkj2cLutas2L', '_blank')">Join Channel</button>
+                    </center>
+                </div>
+            </div>
+            <button class="link-box" onclick="toggleEmbed('intishar')">Intishar AA</button>
+        </div>
     </div>
-    
+
+    <script>
+        let currentOpenContainer = null;
+
+        function toggleEmbed(containerId, embedUrl) {
+            const container = document.getElementById(`${containerId}-container`);
+            
+            // If clicking the same container that's already open, close it
+            if (currentOpenContainer === container) {
+                container.classList.remove('active');
+                if (containerId !== 'intishar') {
+                    document.getElementById(`${containerId}-iframe`).src = '';
+                }
+                currentOpenContainer = null;
+                return;
+            }
+            
+            // Close any currently open container
+            if (currentOpenContainer) {
+                const currentId = currentOpenContainer.id.replace('-container', '');
+                currentOpenContainer.classList.remove('active');
+                if (currentId !== 'intishar') {
+                    document.getElementById(`${currentId}-iframe`).src = '';
+                }
+            }
+            
+            // Open the clicked container
+            container.classList.add('active');
+            if (embedUrl && containerId !== 'intishar') {
+                document.getElementById(`${containerId}-iframe`).src = embedUrl;
+            }
+            currentOpenContainer = container;
+        }
+
+        // Close when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!currentOpenContainer) return;
+            
+            const isClickInside = currentOpenContainer.contains(event.target);
+            const isCloseButton = event.target.classList.contains('close-embed');
+            
+            if (!isClickInside || isCloseButton) {
+                const containerId = currentOpenContainer.id.replace('-container', '');
+                toggleEmbed(containerId);
+            }
+        });
+    </script>
 </body>
 </html>
