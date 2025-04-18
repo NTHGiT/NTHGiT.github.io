@@ -116,9 +116,18 @@
     .whatsapp-button:hover {
         background: #128C7E;
     }
+    #github-card {
+    margin: 0 auto;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
 
     /* Tablet styles (600px and up) */
     @media screen and (min-width: 600px) {
+        #github-card {
+            max-width: 400px;
+        }
         .profile-img {
             width: 150px;
             height: 150px;
@@ -137,6 +146,9 @@
         }
         .button-embed-container {
             width: 50%;
+            max-width: 500px;
+        }
+        #github-card {
             max-width: 500px;
         }
     }
